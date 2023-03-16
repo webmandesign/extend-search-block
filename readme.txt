@@ -10,20 +10,25 @@ Requires PHP:      7.0
 Stable tag:        1.0.0
 License:           GNU General Public License v3
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
-Tags:              webman, webman design, blocks, block editor, block, tha, theme hook alliance, hooks, actions
+Tags:              webman, webman design, blocks, block editor, block, search, post type, taxonomy, modification, extension
 
-Extending core Search block with search modifier fields.
+Extending WordPress Search block with search results modifier fields.
 
 
 == Description ==
 
-Extending core Search block with search modifier fields.
+Extending WordPress Search block with search results modifier fields.
 
-= What problem does it solve? = @TODO
+= What problem does it solve? =
 
-❓ _Do you want to execute PHP code in the page or post content?_
+❓ _Do you want to narrow a search to specific post type only?_
+❓ _Do you want to narrow a search to specific category only?_
 
-Extend Search Block plugin provides **Action hook** block solving these cases!
+Extend Search Block plugin provides additional search results modification fields solving these cases!
+
+In Search block settings sidebar simply choose which post type should the search look for. You can also choose a taxonomy and a dropdown with the taxonomy terms will be displayed in the search form on your website front-end to further narrow down the search results.
+
+_(Note that this plugin only alters WordPress **Search block**, not the PHP [`get_search_form()` function](https://developer.wordpress.org/reference/functions/get_search_form/).)_
 
 = Got a question or suggestion? =
 
@@ -37,20 +42,20 @@ In case of any question or suggestion regarding this plugin, feel free to ask at
 3. Plugin works immediately after activation by adding new settings options to WordPress native "Search" block in block editor.
 
 
-== Frequently Asked Questions == @TODO
+== Frequently Asked Questions ==
 
 = How does it work? =
 
-1. Insert an **Action hook** block into your page/post content (or into Site Editor) where you want to execute your PHP code.
-2. Select an action hook name to be executed at the place.
-3. Save the post/page/Site Editor.
-4. In your theme's `functions.php` file add your PHP code to execute, such as: `add_action( 'action_hook_name_here', function() { echo 'Hello world!'; } );`
-5. Watch your code appear on your website front-end.
+1. Insert **Search** block into your page/post content (or into Site Editor).
+2. In the block settings sidebar open the **Search modifiers** panel.
+3. Tweak the settings to your needs. Please note that resulting modifications only affect front-end of the search form, not the editor preview.
+4. Save your content and preview changes to search from on your website front-end.
 
 
 == Screenshots ==
 
-1. Preview of the block functionality
+1. Preview of additional Search block options
+2. Modified Search block on front-end of your website
 
 
 == Changelog ==

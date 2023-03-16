@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  Extend Search Block
  * Plugin URI:   https://www.webmandesign.eu/portfolio/extend-search-block-wordpress-plugin/
- * Description:  Extending core Search block with search modifier fields.
+ * Description:  Extending WordPress Search block with search results modifier fields.
  * Version:      1.0.0
  * Author:       WebMan Design, Oliver Juhas
  * Author URI:   https://www.webmandesign.eu/
