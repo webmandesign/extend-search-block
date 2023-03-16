@@ -54,29 +54,83 @@ class Block {
 
 			$handle = 'extend-search-block';
 
+			$post_types = get_post_types( array( 'exclude_from_search' => false ), 'objects' );
+			$taxonomies = get_taxonomies( array( 'publicly_queryable' => true ), 'objects' );
+
 
 		// Processing
 
-			wp_register_script(
-				$handle,
-				EXTEND_SEARCH_BLOCK_URL . 'blocks/search/mods.js',
-				array( // @TODO
-					'wp-blocks',
-					'wp-hooks',
-					'wp-element',
-					'wp-compose',
-					'wp-components',
-					'wp-i18n',
-					'wp-block-editor',
-					'wp-polyfill',
-					'lodash',
-				),
-				'v' . EXTEND_SEARCH_BLOCK_VERSION
-			);
+			// Preparing JS object from post types array.
+
+				/**
+				 * Filters post types array.
+				 *
+				 * @since  1.0.0
+				 *
+				 * @param  array $post_types
+				 */
+				$post_types = (array) apply_filters( 'extend-search-block/post_types', $post_types );
+
+				foreach ( $post_types as $name => $post_type ) {
+					unset( $post_types[ $name ] );
+					$label = $post_type->label;
+					$post_types[ $label ] = '{label:"' . esc_js( $label ) . '",value:"' . esc_js( $name ) . '"}';
+				}
+
+				ksort( $post_types );
+
+			// Preparing JS object from taxonomies array.
+
+				/**
+				 * Filters taxonomies array.
+				 *
+				 * @since  1.0.0
+				 *
+				 * @param  array $taxonomies
+				 */
+				$taxonomies = (array) apply_filters( 'extend-search-block/taxonomies', $taxonomies );
+
+				foreach ( $taxonomies as $name => $taxonomy ) {
+					unset( $taxonomies[ $name ] );
+
+					$object_types = array_map(
+						function( $object_type ) {
+							return get_post_type_object( $object_type )->label;
+						},
+						(array) $taxonomy->object_type
+					);
+
+					$label  = $taxonomy->label;
+					$label .= ' (' . implode( ', ', (array) $object_types ) . ')';
+
+					$taxonomies[ $label ] = '{label:"' . esc_js( $label ) . '",value:"' . esc_js( $name ) . '"}';
+				}
+
+				ksort( $taxonomies );
+
+			// Registering and enqueuing scripts.
+
+				wp_register_script(
+					$handle,
+					EXTEND_SEARCH_BLOCK_URL . 'blocks/search/mods.js',
+					array(
+						'wp-hooks',
+						'wp-element',
+						'wp-compose',
+						'wp-components',
+						'wp-i18n',
+						'wp-block-editor',
+						'wp-polyfill',
+					),
+					'v' . EXTEND_SEARCH_BLOCK_VERSION
+				);
 
 				wp_add_inline_script(
 					$handle,
-					'var wmdExtendSearchBlock = {};', // @TODO
+					'var wmdExtendSearchBlock={'
+					. 'postTypes:[' . implode( ',', $post_types ) . '],'
+					. 'taxonomies:[' . implode( ',', $taxonomies ) . '],'
+					.'};',
 					'before'
 				);
 

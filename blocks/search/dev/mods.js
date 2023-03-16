@@ -38,11 +38,13 @@
 
 				// Processing
 
+					// Adding post type attribute.
 					settings.attributes.postType = {
 						type    : 'array',
 						default : [],
 					};
 
+					// Adding taxonomy attribute.
 					settings.attributes.taxonomy = {
 						type    : 'array',
 						default : [],
@@ -52,7 +54,6 @@
 				// Output
 
 					return settings;
-
 			}
 		);
 
@@ -61,18 +62,25 @@
 			'extend-search-block/mods/add-controls',
 			( BlockEdit ) => {
 
-				const withInspectorControls = HOComponent(
-					( BlockEdit ) => {
+				// Variables
 
-						return ( props ) => {
+					const withInspectorControls = HOComponent( ( BlockEdit ) => { return ( props ) => {
+
+						// Requirements check
 
 							if ( 'core/search' !== props.name ) {
 								return Element( BlockEdit, props );
 							}
 
+
+						// Variables
+
 							const
-								// { info, hooks }   = wmdActionHookBlock,
-								{ postType, taxonomy } = props.attributes;
+								{ postTypes, taxonomies } = wmdExtendSearchBlock,
+								{ postType, taxonomy }    = props.attributes;
+
+
+						// Output
 
 							return Element( Fragment, {},
 								Element( BlockEdit, props ),
@@ -82,8 +90,12 @@
 											title       : __( 'Search modifiers', 'extend-search-block' ),
 											initialOpen : false,
 										},
+
+										// Description/help.
 										Element( 'p', { className: 'description' }, __( 'Keep pressing CTRL (Windows) or CMD (Mac) key while selecting or deselecting item(s) in the fields below.', 'extend-search-block' ) ),
 										Element( 'hr' ),
+
+										// Post type multiselect.
 										Element( Comp.SelectControl,
 											{
 												multiple : true,
@@ -91,12 +103,11 @@
 												help     : __( 'Narrows search results to selected post type(s) only.', 'extend-search-block' ),
 												value    : postType,
 												onChange : ( newValue ) => props.setAttributes( { postType: newValue } ),
-												options  : [ // @TODO
-													{ label: __( 'Post', 'extend-search-block' ), value: 'post' },
-													{ label: __( 'Page', 'extend-search-block' ), value: 'page' },
-												],
+												options  : postTypes,
 											}
 										),
+
+										// Taxonomy multiselect.
 										Element( Comp.SelectControl,
 											{
 												multiple : true,
@@ -104,21 +115,19 @@
 												help     : __( 'Adds selected taxonomy dropdown to the search form on the front-end of your website.', 'extend-search-block' ) + ' ' + __( 'User will be able to narrow down the search results to specific taxonomy term only.', 'extend-search-block' ),
 												value    : taxonomy,
 												onChange : ( newValue ) => props.setAttributes( { taxonomy: newValue } ),
-												options  : [ // @TODO
-													{ label: __( 'Tags', 'extend-search-block' ), value: 'post_tag' },
-													{ label: __( 'Categories', 'extend-search-block' ), value: 'category' },
-												],
+												options  : taxonomies,
 											}
 										)
 									)
 								)
 							);
 
-						};
-					}
-				);
+					} } );
 
-				return withInspectorControls( BlockEdit );
+
+				// Output
+
+					return withInspectorControls( BlockEdit );
 			}
 		);
 
