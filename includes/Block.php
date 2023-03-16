@@ -36,6 +36,7 @@ class Block {
 
 				add_filter( 'render_block', __CLASS__ . '::render_block__post_type', 10, 2 );
 				add_filter( 'render_block', __CLASS__ . '::render_block__taxonomy', 10, 2 );
+				add_filter( 'render_block', __CLASS__ . '::render_block__empty_search_term', 10, 2 );
 
 				add_filter( 'register_page_post_type_args', __CLASS__ . '::make_page_publicly_queryable' );
 
@@ -294,6 +295,36 @@ class Block {
 			return $block_content;
 
 	} // /render_block__taxonomy
+
+	/**
+	 * Block output modification: Allow empty search term.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  string $block_content  The rendered content. Default null.
+	 * @param  array  $block          The block being rendered.
+	 *
+	 * @return  string
+	 */
+	public static function render_block__empty_search_term( string $block_content, array $block ): string {
+
+		// Processing
+
+			if ( 'core/search' === $block['blockName'] ) {
+
+				$block_content = str_replace(
+					' required',
+					' data-required',
+					$block_content
+				);
+			}
+
+
+		// Output
+
+			return $block_content;
+
+	} // /render_block__empty_search_term
 
 	/**
 	 * Makes Page post type publicly queryable.
