@@ -1,0 +1,19 @@
+//
+// Block styles.
+//
+// @package    Extend Search Block
+// @copyright  WebMan Design, Oliver Juhas
+//
+// @since  1.0.0
+//
+
+.wp-block-search {
+
+	&__inside-wrapper.has-dropdown {
+		flex-wrap: wrap;
+	}
+
+	&__select {
+		margin-inline-end: .5em;
+	}
+}
