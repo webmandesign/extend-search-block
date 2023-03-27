@@ -5,7 +5,7 @@ Donate link:       https://www.webmandesign.eu/contact/#donation
 Author URI:        https://www.webmandesign.eu
 Plugin URI:        https://www.webmandesign.eu/portfolio/extend-search-block-wordpress-plugin/
 Requires at least: 6.1
-Tested up to:      6.1
+Tested up to:      6.2
 Requires PHP:      7.0
 Stable tag:        1.0.0
 License:           GNU General Public License v3
