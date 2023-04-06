@@ -11,9 +11,14 @@
 
 	&__inside-wrapper.has-dropdown {
 		flex-wrap: wrap;
-	}
 
-	&__select {
-		margin-inline-end: .5em;
+		.wp-block-search__select {
+			margin: 0;
+			margin-inline-end: .5em;
+		}
+
+		.wp-block-search__input {
+			width: auto;
+		}
 	}
 }

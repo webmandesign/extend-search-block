@@ -21,14 +21,14 @@ Extending WordPress Search block with search results modifier fields.
 
 = What problem does it solve? =
 
-❓ _Do you want to narrow a search to specific post type only?_
-❓ _Do you want to narrow a search to specific category only?_
+❓ _Do you want to narrow search results to a specific post type only?_
+❓ _Do you want to narrow search results to a specific category/tag/taxonomy term only?_
 
-Extend Search Block plugin provides additional search results modification fields solving these cases!
+**Extend Search Block** plugin provides additional search results modification fields solving these issues!
 
-In Search block settings sidebar simply choose which post type should the search look for. You can also choose a taxonomy and a dropdown with the taxonomy terms will be displayed in the search form on your website front-end to further narrow down the search results.
+In _**Search** block_ settings sidebar simply choose which post type should the search form look for. You can also choose a taxonomy and a dropdown with the taxonomy terms will be displayed in the search form on your website front-end to further narrow down the search results.
 
-_(Note that this plugin only alters WordPress **Search block**, not the PHP [`get_search_form()` function](https://developer.wordpress.org/reference/functions/get_search_form/).)_
+_(Note that this plugin only alters WordPress **Search** block, not the PHP [`get_search_form()` function](https://developer.wordpress.org/reference/functions/get_search_form/).)_
 
 = Got a question or suggestion? =
 
@@ -39,17 +39,17 @@ In case of any question or suggestion regarding this plugin, feel free to ask at
 
 1. Unzip the plugin download file and upload `extend-search-block` folder into the `/wp-content/plugins/` directory.
 2. Activate the plugin through the *"Plugins"* menu in WordPress.
-3. Plugin works immediately after activation by adding new settings options to WordPress native "Search" block in block editor.
+3. Plugin works immediately after activation by adding new settings options to WordPress native _**Search** block_ in block editor.
 
 
 == Frequently Asked Questions ==
 
 = How does it work? =
 
-1. Insert **Search** block into your page/post content (or into Site Editor).
-2. In the block settings sidebar open the **Search modifiers** panel.
-3. Tweak the settings to your needs. Please note that resulting modifications only affect front-end of the search form, not the editor preview.
-4. Save your content and preview changes to search from on your website front-end.
+1. Insert _**Search** block_ into your page/post content (or into Site Editor).
+2. In the block settings sidebar open the **"Search modifiers"** panel.
+3. Tweak the settings to your needs. Note that resulting modifications only affect front-end of the search form, so you will not be able to preview them in editor.
+4. Save your content and preview changes applied to search from on your website front-end.
 
 
 == Screenshots ==

@@ -155,7 +155,7 @@ class Block {
 			$css = ob_get_clean();
 
 			wp_add_inline_style(
-				'wp-block-search',
+				'wp-global-styles',
 				wp_strip_all_tags( $css )
 			);
 
