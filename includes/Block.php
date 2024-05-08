@@ -5,10 +5,13 @@
  * @package    Extend Search Block
  * @copyright  WebMan Design, Oliver Juhas
  *
- * @since  1.0.0
+ * @since    1.0.0
+ * @version  1.0.1
  */
 
 namespace WebManDesign\Block\Mod\Search;
+
+use WP_HTML_Tag_Processor;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
@@ -142,7 +145,8 @@ class Block {
 	/**
 	 * Enqueue block styles.
 	 *
-	 * @since  1.0.0
+	 * @since    1.0.0
+	 * @version  1.0.1
 	 *
 	 * @return  void
 	 */
@@ -155,7 +159,7 @@ class Block {
 			$css = ob_get_clean();
 
 			wp_add_inline_style(
-				'wp-global-styles',
+				'wp-block-library',
 				wp_strip_all_tags( $css )
 			);
 
@@ -212,7 +216,8 @@ class Block {
 	/**
 	 * Block output modification: Add dropdown for taxonomy.
 	 *
-	 * @since  1.0.0
+	 * @since    1.0.0
+	 * @version  1.0.1
 	 *
 	 * @param  string $block_content  The rendered content. Default null.
 	 * @param  array  $block          The block being rendered.
@@ -228,6 +233,7 @@ class Block {
 				&& ! empty( $block['attrs']['taxonomy'] )
 			) {
 
+				// Get dropdown fields HTML.
 				$fields = array_filter( array_map(
 					function( $taxonomy ) {
 						if ( $taxonomy = get_taxonomy( $taxonomy ) ) {
@@ -265,28 +271,46 @@ class Block {
 					$style = array( 'input' => '' );
 				}
 
-				// Select element CSS class.
-				if ( ! empty( $block['attrs']['borderColor'] ) ) {
-					$class = ' has-border-color has-' . $block['attrs']['borderColor'] . '-border-color';
-				} else {
-					$class = '';
-				}
+				// Modifying new fields.
 
-				$block_content = str_replace(
-					array(
+					$dropdowns     = new WP_HTML_Tag_Processor( implode( '', $fields ) );
+					$count         = count( $fields );
+					$inline_styles = styles_for_block_core_search( $block['attrs'] );
+					$inline_styles = str_replace( [ ' style="', 'style="', '"' ], '', $inline_styles['input'] );
+					$classes       = array(
+						get_border_color_classes_for_block_core_search( $block['attrs'] ),
+						get_typography_classes_for_block_core_search( $block['attrs'] ),
+					);
+
+					while ( $count > 0 ) {
+
+						$dropdowns->next_tag( 'select' );
+						$dropdowns->add_class( implode( ' ', $classes ) );
+						$dropdowns->set_attribute( 'style', $inline_styles );
+
+						--$count;
+					}
+
+					$fields = $dropdowns->get_updated_html();
+
+				// Add new fields to search form.
+
+					$seach = array(
 						'wp-block-search__inside-wrapper',
+						// Just in case, we need both of these:
 						'<input type="search"',
-						'<select ',
-						'wp-block-search__select',
-					),
-					array(
-						'wp-block-search__inside-wrapper has-dropdown',
-						implode( '', $fields ) . '<input type="search"',
-						'<select ' . $style['input'] . ' ',
-						'wp-block-search__select' . $class,
-					),
-					$block_content
-				);
+						'<input class="wp-block-search__input',
+					);
+
+					$block_content = str_replace(
+						$seach,
+						array(
+							$seach[0] . ' has-dropdown',
+							$fields . $seach[1],
+							$fields . $seach[2],
+						),
+						$block_content
+					);
 			}
 
 
